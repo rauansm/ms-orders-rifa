@@ -29,11 +29,11 @@ public class UserAPI {
 
     @GetMapping("/{idUser}")
     @ResponseStatus(code = HttpStatus.OK)
-    public UserDetailsResponse userSearch(@PathVariable UUID idUser){
-        log.info("[start] UserAPI - userSearch");
+    public UserDetailsResponse searchUserById(@PathVariable UUID idUser){
+        log.info("[start] UserAPI - searchUserById");
         log.debug("[idUser] {}", idUser);
-
-        log.info("[finish] UserAPI - userSearch");
-        return null;
+        var userDetails = userService.searchUserById(idUser);
+        log.info("[finish] UserAPI - searchUserById");
+        return userDetails;
     }
 }
