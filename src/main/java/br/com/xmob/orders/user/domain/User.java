@@ -1,5 +1,6 @@
 package br.com.xmob.orders.user.domain;
 
+import br.com.xmob.orders.user.application.api.UserRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -24,6 +25,17 @@ public class User {
     private String email;
     @Indexed(unique = true)
     private String cpf;
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public User(UserRequest userRequest) {
+        this.id = UUID.randomUUID();
+        this.name = userRequest.getName();
+        this.phone = userRequest.getPhone();
+        this.email = userRequest.getEmail();
+        this.cpf = userRequest.getCpf();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 }
 
