@@ -1,10 +1,14 @@
 package br.com.xmob.orders.user.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,5 +24,6 @@ public class User {
     private String email;
     @Indexed(unique = true)
     private String cpf;
+    private OffsetDateTime createdAt;
 }
 
