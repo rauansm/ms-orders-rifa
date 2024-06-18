@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/user")
@@ -17,12 +18,22 @@ public class UserAPI {
     private final UserService userService;
 
     @PostMapping(value = "/new")
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public UserResponse createUser(@RequestBody @Valid UserRequest userRequest){
         log.info("[start] UserAPI - createUser");
         log.debug("[UserRequest] {}", userRequest);
         var userCreated = userService.createUser(userRequest);
         log.info("[finish] UserAPI - createUser");
         return userCreated;
+    }
+
+    @GetMapping("/{idUser}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public UserDetailsResponse userSearch(@PathVariable UUID idUser){
+        log.info("[start] UserAPI - userSearch");
+        log.debug("[idUser] {}", idUser);
+
+        log.info("[finish] UserAPI - userSearch");
+        return null;
     }
 }
