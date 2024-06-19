@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: test
+      on-profile: dev
 
 
   data:
@@ -9,3 +9,7 @@ spring:
       host: localhost
       port: 27017
       database: mongodb
+      username: admin
+      password: pass
+      authentication-database: admin
+      auto-index-creation: true
