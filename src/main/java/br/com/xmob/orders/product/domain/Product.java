@@ -34,8 +34,7 @@ public class Product {
     private StatusDisplay textStatus;
     private LocalDateTime dateDraw;
     private String category;
-    private boolean active;
-    private String awards;
+    private List<String> awards;
 
     private List<Winner> winners;
 
