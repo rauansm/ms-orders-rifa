@@ -1,5 +1,6 @@
 package br.com.xmob.orders.product.application.api;
 
+import br.com.xmob.orders.product.application.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -13,13 +14,15 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class ProductAPI {
 
+    private final ProductService productService;
+
     @PostMapping(value = "/new")
     @ResponseStatus(code = HttpStatus.CREATED)
     public ProductResponse createProduct(@RequestBody @Valid ProductRequest productRequest){
         log.info("[start] ProductAPI - createProduct");
         log.debug("[ProductRequest] {}", productRequest);
-
+        var productCreated = productService.createProduct(productRequest);
         log.info("[finish] ProductAPI - createProduct");
-        return null;
+        return productCreated;
     }
 }

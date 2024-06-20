@@ -1,6 +1,5 @@
 package br.com.xmob.orders.product.domain;
 
-import br.com.xmob.orders.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +9,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Winner {
+    private String name;
     private String number;
     private String drawDate;
     private String award;
-    private Product product;
-    private User user;
 }
