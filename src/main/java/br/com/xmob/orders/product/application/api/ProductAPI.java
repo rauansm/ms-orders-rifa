@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/product")
@@ -24,5 +25,15 @@ public class ProductAPI {
         var productCreated = productService.createProduct(productRequest);
         log.info("[finish] ProductAPI - createProduct");
         return productCreated;
+    }
+
+    @GetMapping(value = "/{idProduct}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ProductDetailsResponse searchProduct(@PathVariable UUID idProduct){
+        log.info("[start] ProductAPI - searchProduct");
+        log.debug("[idProduct] {}", idProduct);
+        var productResponse = productService.searchProduct(idProduct);
+        log.info("[finish] ProductAPI - searchProduct");
+        return null;
     }
 }
