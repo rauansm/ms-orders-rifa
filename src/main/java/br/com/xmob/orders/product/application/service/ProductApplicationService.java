@@ -31,11 +31,11 @@ public class ProductApplicationService implements ProductService {
     }
 
     @Override
-    public ProductDetailsResponse searchProduct(UUID idProduct) {
-        log.info("[start] ProductApplicationService - searchProduct");
+    public ProductDetailsResponse searchProductById(UUID idProduct) {
+        log.info("[start] ProductApplicationService - searchProductById");
         log.debug("[idProduct] {}", idProduct);
-
-        log.info("[finish] ProductApplicationService - searchProduct");
-        return null;
+        Product product = productRepository.searchProductById(idProduct);
+        log.info("[finish] ProductApplicationService - searchProductById");
+        return ProductDetailsResponse.from(product);
     }
 }

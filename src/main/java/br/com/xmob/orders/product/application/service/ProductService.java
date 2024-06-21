@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface ProductService {
     ProductResponse createProduct(ProductRequest productRequest);
 
-    ProductDetailsResponse searchProduct(UUID idProduct);
+    ProductDetailsResponse searchProductById(UUID idProduct);
 }

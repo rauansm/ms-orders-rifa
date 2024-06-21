@@ -29,11 +29,11 @@ public class ProductAPI {
 
     @GetMapping(value = "/{idProduct}")
     @ResponseStatus(code = HttpStatus.OK)
-    public ProductDetailsResponse searchProduct(@PathVariable UUID idProduct){
-        log.info("[start] ProductAPI - searchProduct");
+    public ProductDetailsResponse searchProductById(@PathVariable UUID idProduct){
+        log.info("[start] ProductAPI - searchProductById");
         log.debug("[idProduct] {}", idProduct);
-        var productResponse = productService.searchProduct(idProduct);
-        log.info("[finish] ProductAPI - searchProduct");
-        return null;
+        var productResponse = productService.searchProductById(idProduct);
+        log.info("[finish] ProductAPI - searchProductById");
+        return productResponse;
     }
 }
