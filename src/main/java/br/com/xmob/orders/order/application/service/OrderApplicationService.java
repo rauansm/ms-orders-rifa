@@ -5,7 +5,6 @@ import br.com.xmob.orders.order.application.api.OrderResponse;
 import br.com.xmob.orders.order.domain.Order;
 import br.com.xmob.orders.order.infra.OrderRepository;
 import br.com.xmob.orders.product.domain.Product;
-import br.com.xmob.orders.product.infra.ProductInfraRepository;
 import br.com.xmob.orders.product.infra.ProductRepository;
 import br.com.xmob.orders.user.domain.User;
 import br.com.xmob.orders.user.infra.UserRepository;
