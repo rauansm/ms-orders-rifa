@@ -1,17 +1,19 @@
 package br.com.xmob.orders.order.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import br.com.xmob.orders.order.application.api.OrderRequest;
+import br.com.xmob.orders.product.domain.Product;
+import br.com.xmob.orders.user.domain.User;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
@@ -32,4 +34,21 @@ public class Order {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public Order(OrderRequest orderRequest, User user, Product product) {
+        this.id = UUID.randomUUID();
+        this.productId = product.getId();
+        this.userId = user.getId();
+        this.status = StatusOrder.WAITING_PAYMENT;
+        this.quantity = orderRequest.getQuantity();
+        this.price = product.getPrice();
+        this.total = calculatesTotalValue(orderRequest.getQuantity());
+        this.numbers = new ArrayList<>();
+        this.createdAt = LocalDateTime.now();
+        this.expirationAt = this.createdAt.plusMinutes(8);
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    private BigDecimal calculatesTotalValue(Integer quantity) {
+        return this.price.multiply(new BigDecimal(quantity));
+    }
 }
