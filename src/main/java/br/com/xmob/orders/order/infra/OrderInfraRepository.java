@@ -17,6 +17,7 @@ public class OrderInfraRepository implements OrderRepository {
     @Override
     public void save(Order order) {
         log.info("[start] OrderInfraRepository - save");
+        log.debug("[Order] {}", order);
         orderSpringDataMongo.save(order);
         log.info("[finish] OrderInfraRepository - save");
     }

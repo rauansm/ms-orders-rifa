@@ -3,6 +3,7 @@ package br.com.xmob.orders.order.application.service;
 import br.com.xmob.orders.order.application.api.OrderRequest;
 import br.com.xmob.orders.order.application.api.OrderResponse;
 import br.com.xmob.orders.order.domain.Order;
+import br.com.xmob.orders.order.domain.PixResponse;
 import br.com.xmob.orders.order.infra.OrderRepository;
 import br.com.xmob.orders.product.domain.Product;
 import br.com.xmob.orders.product.infra.ProductRepository;
@@ -20,6 +21,7 @@ public class OrderApplicationService implements OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final PixClientRest pixClientRest;
 
     @Transactional
     @Override
@@ -30,9 +32,11 @@ public class OrderApplicationService implements OrderService {
         Product product = productRepository.searchProductById(orderRequest.getProductId());
         product.validatePurchaseConditions(orderRequest);
         Order order = new Order(orderRequest,user,product);
+        PixResponse pixResponse = pixClientRest.createPixCharge(order,user);
+        order.updatePixInfo(pixResponse);
         orderRepository.save(order);
         productRepository.save(product);
         log.info("[finish] OrderApplicationService - createOrder");
-        return null;
+        return new OrderResponse(order);
     }
 }

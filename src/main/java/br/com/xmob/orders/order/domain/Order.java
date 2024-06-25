@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
@@ -50,5 +49,10 @@ public class Order {
 
     private BigDecimal calculatesTotalValue(Integer quantity) {
         return this.price.multiply(new BigDecimal(quantity));
+    }
+
+    public void updatePixInfo(PixResponse pixResponse) {
+        this.paymentPIXCopiaCola = pixResponse.getPaymentPIXCopiaCola();
+        this.paymentPIXQRCode = pixResponse.getPaymentPIXQRCode();
     }
 }

@@ -12,7 +12,7 @@
 	<artifactId>orders</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>orders</name>
-	<description>This microservice maintains the requested trading domain</description>
+	<description>This microservice maintains the orders business domain</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.7</spring-cloud.version>

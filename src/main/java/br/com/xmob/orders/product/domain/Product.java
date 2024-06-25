@@ -72,6 +72,7 @@ public class Product {
 
     private void updatesAvailableNumbers(Integer quantity) {
         this.quantityNumbersAvailable -= quantity;
+        this.updatedAt = LocalDateTime.now();
     }
 
     private void validatesMinAndMaxQuantity(Integer quantityOrder) {
