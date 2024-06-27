@@ -1,5 +1,6 @@
 package br.com.xmob.orders.order.application.service;
 
+import br.com.xmob.orders.order.application.api.OrderDetailsResponse;
 import br.com.xmob.orders.order.application.api.OrderRequest;
 import br.com.xmob.orders.order.application.api.OrderResponse;
 import br.com.xmob.orders.order.domain.Order;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @Log4j2
@@ -38,5 +41,11 @@ public class OrderApplicationService implements OrderService {
         productRepository.save(product);
         log.info("[finish] OrderApplicationService - createOrder");
         return new OrderResponse(order);
+    }
+
+    @Override
+    public OrderDetailsResponse searchOrderDetailsById(UUID idOrder) {
+
+        return null;
     }
 }

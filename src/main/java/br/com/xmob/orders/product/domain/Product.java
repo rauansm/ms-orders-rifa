@@ -2,8 +2,12 @@ package br.com.xmob.orders.product.domain;
 
 import br.com.xmob.orders.order.application.api.OrderRequest;
 import br.com.xmob.orders.product.application.api.ProductRequest;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -37,8 +41,9 @@ public class Product {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<String> awards;
-
     private List<Winner> winners;
+    @Version
+    private Long version;
 
     public Product(ProductRequest productRequest) {
         this.id = UUID.randomUUID();

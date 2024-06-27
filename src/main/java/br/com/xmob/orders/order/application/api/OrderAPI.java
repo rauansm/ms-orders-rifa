@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/order")
@@ -24,5 +25,15 @@ public class OrderAPI {
         var orderCreated = orderService.createOrder(orderRequest);
         log.info("[finish] OrderAPI - createOrder");
         return orderCreated;
+    }
+
+    @GetMapping(value = "/payment/{idOrder}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public OrderDetailsResponse searchOrderDetailsById (@PathVariable UUID idOrder){
+        log.info("[start] OrderAPI - searchOrderDetails");
+        log.debug("[idOrder] {}", idOrder);
+        var orderDetails = orderService.searchOrderDetailsById(idOrder);
+        log.info("[finish] OrderAPI - searchOrderDetails");
+        return null;
     }
 }

@@ -1,8 +1,6 @@
 package br.com.xmob.orders.order.infra;
 
 import br.com.xmob.orders.order.domain.Order;
-import br.com.xmob.orders.product.domain.Product;
-import br.com.xmob.orders.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Log4j2
 @RequiredArgsConstructor
 public class OrderInfraRepository implements OrderRepository {
-
     private final OrderSpringDataMongo orderSpringDataMongo;
 
     @Override

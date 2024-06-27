@@ -3,14 +3,17 @@ package br.com.xmob.orders.order.domain;
 import br.com.xmob.orders.order.application.api.OrderRequest;
 import br.com.xmob.orders.product.domain.Product;
 import br.com.xmob.orders.user.domain.User;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,7 +29,7 @@ public class Order {
     private Integer quantity;
     private BigDecimal price;
     private BigDecimal total;
-    private List<String> numbers;
+    private Set<String> numbers;
     private LocalDateTime expirationAt;
     private String paymentPIXQRCode;
     private String paymentPIXCopiaCola;
@@ -41,7 +44,7 @@ public class Order {
         this.quantity = orderRequest.getQuantity();
         this.price = product.getPrice();
         this.total = calculatesTotalValue(orderRequest.getQuantity());
-        this.numbers = new ArrayList<>();
+        this.numbers = new HashSet<>();
         this.createdAt = LocalDateTime.now();
         this.expirationAt = this.createdAt.plusMinutes(8);
         this.updatedAt = LocalDateTime.now();
