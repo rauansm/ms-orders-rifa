@@ -45,7 +45,12 @@ public class OrderApplicationService implements OrderService {
 
     @Override
     public OrderDetailsResponse searchOrderDetailsById(UUID idOrder) {
-
-        return null;
+        log.info("[start] OrderApplicationService - searchOrderDetails");
+        log.debug("[idOrder] {}", idOrder);
+        Order order = orderRepository.searchOrderById(idOrder);
+        Product product = productRepository.searchProductById(order.getProductId());
+        User user = userRepository.searchUserById(order.getUserId());
+        log.info("[finish] OrderApplicationService - searchOrderDetails");
+        return new OrderDetailsResponse(order,product,user);
     }
 }

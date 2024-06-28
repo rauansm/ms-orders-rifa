@@ -34,6 +34,6 @@ public class OrderAPI {
         log.debug("[idOrder] {}", idOrder);
         var orderDetails = orderService.searchOrderDetailsById(idOrder);
         log.info("[finish] OrderAPI - searchOrderDetails");
-        return null;
+        return orderDetails;
     }
 }
