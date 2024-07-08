@@ -35,7 +35,7 @@ public class OrderApplicationService implements OrderService {
         Product product = productRepository.searchProductById(orderRequest.getProductId());
         product.validatePurchaseConditions(orderRequest);
         Order order = new Order(orderRequest,user,product);
-        PixResponse pixResponse = pixClientRest.createPixCharge(order,user);
+        PixResponse pixResponse = pixClientRest.createPixCharge(order,user,product);
         order.updatePixInfo(pixResponse);
         orderRepository.save(order);
         productRepository.save(product);

@@ -40,6 +40,7 @@ public class Product {
     private String category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Integer pixExpirationTime;
     private List<String> awards;
     private List<Winner> winners;
     @Version
@@ -62,6 +63,7 @@ public class Product {
         this.textStatus = productRequest.getTextStatus();
         this.dateDraw = productRequest.getDateDraw();
         this.category = productRequest.getCategory();
+        this.pixExpirationTime = productRequest.getPixExpirationTime();
         this.awards = productRequest.getAwards();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
