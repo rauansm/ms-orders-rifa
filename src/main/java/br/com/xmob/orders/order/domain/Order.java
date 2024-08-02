@@ -46,7 +46,7 @@ public class Order {
         this.total = calculatesTotalValue(orderRequest.getQuantity());
         this.numbers = new HashSet<>();
         this.createdAt = LocalDateTime.now();
-        this.expirationAt = this.createdAt.plusMinutes(8);
+        this.expirationAt = this.createdAt.plusMinutes(product.getPixExpirationTime());
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -57,5 +57,11 @@ public class Order {
     public void updatePixInfo(PixResponse pixResponse) {
         this.paymentPIXCopiaCola = pixResponse.getPaymentPIXCopiaCola();
         this.paymentPIXQRCode = pixResponse.getPaymentPIXQRCode();
+    }
+
+    public void updateNumbersAndStatus(Set<String> numbersOrder) {
+        this.status = StatusOrder.PAID;
+        this.numbers = numbersOrder;
+        this.updatedAt = LocalDateTime.now();
     }
 }

@@ -10,4 +10,6 @@ public interface OrderService {
     OrderResponse createOrder(OrderRequest orderRequest);
 
     OrderDetailsResponse searchOrderDetailsById(UUID idOrder);
+
+    void processOrderPaymentConfirmation(UUID idOrder);
 }

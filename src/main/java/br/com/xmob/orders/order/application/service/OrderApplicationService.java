@@ -15,7 +15,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 @Log4j2
@@ -25,6 +27,9 @@ public class OrderApplicationService implements OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final PixClientRest pixClientRest;
+    private final NumberGenerationService numberGenerationService;
+    private final ReentrantLock reentrantLock;
+
 
     @Transactional
     @Override
@@ -52,5 +57,22 @@ public class OrderApplicationService implements OrderService {
         User user = userRepository.searchUserById(order.getUserId());
         log.info("[finish] OrderApplicationService - searchOrderDetails");
         return new OrderDetailsResponse(order,product,user);
+    }
+
+    @Override
+    public void processOrderPaymentConfirmation(UUID idOrder) {
+        log.info("[start] OrderApplicationService - processOrderPaymentConfirmation");
+        reentrantLock.lock();
+        try {
+            Order order = orderRepository.searchOrderById(idOrder);
+            Product product = productRepository.searchProductById(order.getProductId());
+            Set<String> numbersInUse = orderRepository.searchNumbersInUseByProductId(order.getProductId());
+            Set<String> numbersOrder = numberGenerationService.generateNumbers(numbersInUse, order, product);
+            order.updateNumbersAndStatus(numbersOrder);
+            orderRepository.save(order);
+        } finally {
+            reentrantLock.unlock();
+        }
+        log.info("[finish] OrderApplicationService - processOrderPaymentConfirmation");
     }
 }
