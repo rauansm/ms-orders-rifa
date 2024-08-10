@@ -64,4 +64,9 @@ public class Order {
         this.numbers = numbersOrder;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updateExpiredStatus() {
+        this.status = StatusOrder.EXPIRED;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

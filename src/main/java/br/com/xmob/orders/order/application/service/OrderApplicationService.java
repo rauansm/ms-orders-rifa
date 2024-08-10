@@ -75,4 +75,16 @@ public class OrderApplicationService implements OrderService {
         }
         log.info("[finish] OrderApplicationService - processOrderPaymentConfirmation");
     }
+
+    @Override
+    public void processOrderPaymentExpiration(UUID idOrder) {
+        log.info("[start] OrderApplicationService - processOrderPaymentExpiration");
+            Order order = orderRepository.searchOrderById(idOrder);
+            Product product = productRepository.searchProductById(order.getProductId());
+            order.updateExpiredStatus();
+            product.performsRollbackOfAvailableQuantity(order.getQuantity());
+            orderRepository.save(order);
+            productRepository.save(product);
+        log.info("[finish] OrderApplicationService - processOrderPaymentExpiration");
+    }
 }

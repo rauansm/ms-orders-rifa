@@ -43,24 +43,19 @@ public class OrderInfraRepository implements OrderRepository {
     @Override
     public Set<String> searchNumbersInUseByProductId(UUID productId) {
         log.info("[start] OrderInfraRepository - searchNumbersInUseByOrderId");
-    // Estágio de match para filtrar documentos com o ID desejado
+
         AggregationOperation match = match(Criteria.where("productId").is(productId));
 
-    // Estágio de projeção para extrair apenas o campo "awards"
         AggregationOperation project = project("numbers");
 
-    // Cria a agregação com ambos os estágios
         Aggregation aggregation = newAggregation(match, project);
 
-    // Executa a agregação no MongoDB
         AggregationResults<OrderNumbersProjection> results = mongoTemplate.aggregate(
                 aggregation, "order", OrderNumbersProjection.class);
 
-    // Mapeia e aplaina os resultados para coletar os prêmios em um conjunto
-        Set<String> numbers = results.getMappedResults().stream()
+        log.info("[finish] OrderInfraRepository - searchNumbersInUseByOrderId");
+        return results.getMappedResults().stream()
                 .flatMap(projection -> projection.getNumbers().stream())
                 .collect(Collectors.toSet());
-        log.info("[finish] OrderInfraRepository - searchNumbersInUseByOrderId");
-        return numbers;
     }
 }

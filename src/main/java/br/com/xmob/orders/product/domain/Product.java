@@ -102,4 +102,9 @@ public class Product {
             throw new RuntimeException("O produto informado não está ativo.");
         }
     }
+
+    public void performsRollbackOfAvailableQuantity(Integer quantity) {
+        this.quantityNumbersAvailable += quantity;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

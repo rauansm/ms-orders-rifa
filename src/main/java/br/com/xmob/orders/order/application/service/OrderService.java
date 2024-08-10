@@ -12,4 +12,6 @@ public interface OrderService {
     OrderDetailsResponse searchOrderDetailsById(UUID idOrder);
 
     void processOrderPaymentConfirmation(UUID idOrder);
+
+    void processOrderPaymentExpiration(UUID idOrder);
 }
