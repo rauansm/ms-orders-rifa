@@ -46,7 +46,7 @@ public class ProductResponse {
                 .min(product.getMin())
                 .max(product.getMax())
                 .quantityTotalNumbers(product.getQuantityTotalNumbers())
-                .quantityNumbersRemaining(product.getQuantityNumbersRemaining())
+                .quantityNumbersRemaining(product.getQuantityNumbersAvailable())
                 .textStatus(product.getTextStatus().getText())
                 .dateDraw(product.getDateDraw())
                 .category(product.getCategory())

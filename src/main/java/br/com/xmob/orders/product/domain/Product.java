@@ -1,8 +1,13 @@
 package br.com.xmob.orders.product.domain;
 
+import br.com.xmob.orders.order.application.api.OrderRequest;
 import br.com.xmob.orders.product.application.api.ProductRequest;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -29,15 +34,17 @@ public class Product {
     private Integer min;
     private Integer max;
     private QuantityNumbers quantityTotalNumbers;
-    private Integer quantityNumbersRemaining;
+    private Integer quantityNumbersAvailable;
     private StatusDisplay textStatus;
     private LocalDateTime dateDraw;
     private String category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Integer pixExpirationTime;
     private List<String> awards;
-
     private List<Winner> winners;
+    @Version
+    private Long version;
 
     public Product(ProductRequest productRequest) {
         this.id = UUID.randomUUID();
@@ -52,13 +59,52 @@ public class Product {
         this.min = productRequest.getMin();
         this.max = productRequest.getMax();
         this.quantityTotalNumbers = productRequest.getQuantityTotalNumbers();
-        this.quantityNumbersRemaining = productRequest.getQuantityTotalNumbers().getValue();
+        this.quantityNumbersAvailable = productRequest.getQuantityTotalNumbers().getValue();
         this.textStatus = productRequest.getTextStatus();
         this.dateDraw = productRequest.getDateDraw();
         this.category = productRequest.getCategory();
+        this.pixExpirationTime = productRequest.getPixExpirationTime();
         this.awards = productRequest.getAwards();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.winners = new ArrayList<>();
+    }
+
+    public void validatePurchaseConditions(OrderRequest orderRequest) {
+        checkActiveProduct();
+        checkAvailableNumbers(orderRequest.getQuantity());
+        validatesMinAndMaxQuantity(orderRequest.getQuantity());
+        updatesAvailableNumbers(orderRequest.getQuantity());
+    }
+
+    private void updatesAvailableNumbers(Integer quantity) {
+        this.quantityNumbersAvailable -= quantity;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    private void validatesMinAndMaxQuantity(Integer quantityOrder) {
+        if (quantityOrder < this.min || quantityOrder > this.max){
+            String mensagem = (quantityOrder < this.min)
+                    ? "A quantidade do pedido não pode ser inferior à quantidade mínima permitida: " + this.min
+                    : "A quantidade do pedido não pode ser maior que a quantidade máxima permitida: " + this.max;
+            throw new RuntimeException(mensagem);
+        }
+    }
+
+    private void checkAvailableNumbers(Integer quantityOrder) {
+        if (quantityOrder > this.quantityNumbersAvailable){
+            throw new RuntimeException("Produto não possui quantidade suficiente!");
+        }
+    }
+
+    private void checkActiveProduct() {
+        if (!this.status.equals(Status.ACTIVE)){
+            throw new RuntimeException("O produto informado não está ativo.");
+        }
+    }
+
+    public void performsRollbackOfAvailableQuantity(Integer quantity) {
+        this.quantityNumbersAvailable += quantity;
+        this.updatedAt = LocalDateTime.now();
     }
 }

@@ -3,7 +3,6 @@ spring:
     activate:
       on-profile: dev
 
-
   data:
     mongodb:
       host: localhost
@@ -13,3 +12,22 @@ spring:
       password: pass
       authentication-database: admin
       auto-index-creation: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 3000
+          multiplier: 1
+          max-interval: 300000
+
+rabbitmq:
+  consumer:
+    payment-confirmed: ${PAYMENT_CONFIRMED:payment-aproved-ms-pix}
+    payment-expired: ${PAYMENT_EXPIRED:payment-expired-ms-pix}

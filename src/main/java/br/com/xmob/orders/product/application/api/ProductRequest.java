@@ -37,6 +37,9 @@ public class ProductRequest {
     private QuantityNumbers quantityTotalNumbers;
     private StatusDisplay textStatus = StatusDisplay.BUY_JA;
     private LocalDateTime dateDraw;
+    @NotNull(message = "O tempo de expiração pix deve ser definida.")
+    @Positive(message = "O tempo de expiração pix deve ser um numero positivo.")
+    private Integer pixExpirationTime;
     private String category;
     @NotNull(message = "O campo prêmios é obrigatório e não pode estar em branco.")
     private List<String> awards;

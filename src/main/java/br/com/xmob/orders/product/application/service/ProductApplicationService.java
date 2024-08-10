@@ -5,12 +5,9 @@ import br.com.xmob.orders.product.application.api.ProductRequest;
 import br.com.xmob.orders.product.application.api.ProductResponse;
 import br.com.xmob.orders.product.domain.Product;
 import br.com.xmob.orders.product.infra.ProductRepository;
-import br.com.xmob.orders.user.infra.UserInfraRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
