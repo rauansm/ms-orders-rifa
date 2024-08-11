@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,5 +37,13 @@ public class ProductPhotoInfraRepository implements ProductPhotoRepository {
         log.info("[start] ProductPhotoInfraRepository - deletePhotoById");
         photoSpringDataMongo.deleteById(idPhoto);
         log.info("[finish] ProductPhotoInfraRepository - deletePhotoById");
+    }
+
+    @Override
+    public List<ProductPhoto> listAllProductPhotos(UUID idProduct) {
+        log.info("[start] ProductPhotoInfraRepository - listAllProductPhotos");
+        List<ProductPhoto> photos = photoSpringDataMongo.findAllByProductId(idProduct);
+        log.info("[finish] ProductPhotoInfraRepository - listAllProductPhotos");
+        return photos;
     }
 }

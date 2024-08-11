@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,6 +39,15 @@ public class ProductPhotoAPI {
                 .status(HttpStatus.FOUND)
                 .header(HttpHeaders.LOCATION, photo.getUrl())
                 .build();
+    }
+
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    List<PhotoResponse> listAllProductPhotos(@PathVariable UUID idProduct){
+        log.info("[start] ProductPhotoAPI - listAllProductPhotos");
+        List<PhotoResponse> photos = photoService.listAllProductPhotos(idProduct);
+        log.info("[finish] ProductPhotoAPI - listAllProductPhotos");
+        return photos;
     }
 
     @DeleteMapping("/{idPhoto}")

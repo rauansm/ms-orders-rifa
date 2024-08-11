@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -46,6 +47,14 @@ public class ProductPhotoApplicationService implements ProductPhotoService {
         ProductPhoto photo = photoRepository.searchProductPhotoById(product.getId(), idPhoto);
         log.info("[finish] ProductPhotoApplicationService - searchProductPhotoById");
         return photo;
+    }
+
+    @Override
+    public List<PhotoResponse> listAllProductPhotos(UUID idProduct) {
+        log.info("[start] ProductPhotoApplicationService - listAllProductPhotos");
+        List<ProductPhoto> photos = photoRepository.listAllProductPhotos(idProduct);
+        log.info("[finish] ProductPhotoApplicationService - listAllProductPhotos");
+        return PhotoResponse.convert(photos);
     }
 
     @Transactional

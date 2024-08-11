@@ -32,7 +32,7 @@ public class ProductPhoto {
         this.productId = product.getId();
         this.contentType = photo.getContentType();
         this.size = photo.getSize();
-        this.filename = photo.getOriginalFilename().concat(String.valueOf(System.currentTimeMillis()));
+        this.filename = photo.getOriginalFilename().replace(".", System.currentTimeMillis() + ".");
     }
 
     public void addUrl(URL urlPhoto) {
