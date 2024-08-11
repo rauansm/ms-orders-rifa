@@ -13,9 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -29,7 +27,7 @@ public class Product {
     private String description;
     private Privacy privacy;
     private boolean showHome;
-    private List<String> imageUrls;
+    private Set<String> imageUrls;
     private Status status;
     private boolean highlight;
     private BigDecimal price;
@@ -55,7 +53,7 @@ public class Product {
         this.description = productRequest.getDescription();
         this.privacy = productRequest.getPrivacy();
         this.showHome = productRequest.isShowHome();
-        this.imageUrls = new ArrayList<>();
+        this.imageUrls = new HashSet<>();
         this.status = productRequest.getStatus();
         this.highlight = productRequest.isHighlight();
         this.price = productRequest.getPrice();
@@ -113,6 +111,11 @@ public class Product {
 
     public void addUrlPhoto(URL urlPhoto) {
         this.imageUrls.add(String.valueOf(urlPhoto));
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void removeUrlPhoto(String url) {
+        this.imageUrls.remove(url);
         this.updatedAt = LocalDateTime.now();
     }
 }

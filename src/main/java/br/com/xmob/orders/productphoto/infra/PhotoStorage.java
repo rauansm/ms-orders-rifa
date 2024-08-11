@@ -6,4 +6,6 @@ import java.net.URL;
 
 public interface PhotoStorage {
     URL store(NewPhoto photo);
+
+    void remove(String filename);
 }

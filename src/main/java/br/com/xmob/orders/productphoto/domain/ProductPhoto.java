@@ -5,9 +5,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.aggregation.DateOperators;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URL;
+import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 @Getter
@@ -20,6 +24,7 @@ public class ProductPhoto {
     private UUID productId;
     private String filename;
     private String contentType;
+    private String url;
     private Long size;
 
     public ProductPhoto(Product product, MultipartFile photo) {
@@ -27,6 +32,10 @@ public class ProductPhoto {
         this.productId = product.getId();
         this.contentType = photo.getContentType();
         this.size = photo.getSize();
-        this.filename = photo.getOriginalFilename();
+        this.filename = photo.getOriginalFilename().concat(String.valueOf(System.currentTimeMillis()));
+    }
+
+    public void addUrl(URL urlPhoto) {
+        this.url = urlPhoto.toString();
     }
 }

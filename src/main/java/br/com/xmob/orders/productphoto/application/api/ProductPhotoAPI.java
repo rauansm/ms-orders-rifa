@@ -19,9 +19,17 @@ public class ProductPhotoAPI {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    void addProductPhoto(@PathVariable UUID idProduct, @RequestParam MultipartFile photo){
+    void addProductPhoto(@PathVariable UUID idProduct, @RequestParam MultipartFile photoRequest){
         log.info("[start] ProductPhotoAPI - addProductPhoto");
-        photoService.addProductPhoto(idProduct,photo);
+        photoService.addProductPhoto(idProduct,photoRequest);
         log.info("[finish] ProductPhotoAPI - addProductPhoto");
+    }
+
+    @DeleteMapping("/{idPhoto}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deleteProductPhoto(@PathVariable UUID idProduct, @PathVariable UUID idPhoto){
+        log.info("[start] ProductPhotoAPI - deleteProductPhoto");
+        photoService.deleteProductPhoto(idProduct, idPhoto);
+        log.info("[finish] ProductPhotoAPI - deleteProductPhoto");
     }
 }

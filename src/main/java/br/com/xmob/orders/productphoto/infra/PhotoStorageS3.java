@@ -4,6 +4,7 @@ import br.com.xmob.orders.config.storage.StorageS3Properties;
 import br.com.xmob.orders.productphoto.domain.NewPhoto;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,23 @@ public class PhotoStorageS3 implements PhotoStorage {
         }
     }
 
-        private String getFilePath(String filename){
+    @Override
+    public void remove(String filename) {
+        log.info("[start] PhotoStorageS3 - remove");
+        try {
+        String filepath = getFilePath(filename);
+
+        var deleteObjectRequest = new DeleteObjectRequest(
+                storageProperties.getBucket(), filepath);
+
+        amazonS3.deleteObject(deleteObjectRequest);
+        log.info("[finish] PhotoStorageS3 - remove");
+        } catch (Exception ex) {
+            throw new RuntimeException("Não foi possível excluir arquivo na Amazon S3.", ex);
+        }
+    }
+
+    private String getFilePath(String filename){
             return String.format("%s/%s", storageProperties.getDirectoryPhotos(), filename);
         }
 }
