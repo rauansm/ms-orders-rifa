@@ -1,4 +1,4 @@
-package br.com.xmob.orders.config;
+package br.com.xmob.orders.config.rabbit;
 
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
