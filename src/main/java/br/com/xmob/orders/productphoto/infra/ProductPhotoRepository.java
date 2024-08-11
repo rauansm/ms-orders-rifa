@@ -7,7 +7,7 @@ import java.util.UUID;
 public interface ProductPhotoRepository {
     ProductPhoto saveProductPhoto(ProductPhoto productPhoto);
 
-    ProductPhoto searchProductPhotoById(UUID idPhoto);
+    ProductPhoto searchProductPhotoById(UUID idProduct,UUID idPhoto);
 
     void deletePhotoById(UUID idPhoto);
 }

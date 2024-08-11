@@ -24,9 +24,9 @@ public class ProductPhotoInfraRepository implements ProductPhotoRepository {
     }
 
     @Override
-    public ProductPhoto searchProductPhotoById(UUID idPhoto) {
+    public ProductPhoto searchProductPhotoById(UUID idProduct,UUID idPhoto) {
         log.info("[start] ProductPhotoInfraRepository - searchProductPhotoById");
-        Optional<ProductPhoto> photo = photoSpringDataMongo.findById(idPhoto);
+        Optional<ProductPhoto> photo = photoSpringDataMongo.findByProductIdAndId(idProduct,idPhoto);
         log.info("[finish] ProductPhotoInfraRepository - searchProductPhotoById");
         return photo.orElseThrow(() -> new RuntimeException("Foto não encontrada!"));
     }

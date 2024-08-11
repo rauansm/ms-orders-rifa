@@ -1,6 +1,7 @@
 package br.com.xmob.orders.product.application.api;
 
-import br.com.xmob.orders.product.domain.*;
+import br.com.xmob.orders.product.domain.Product;
+import br.com.xmob.orders.product.domain.Winner;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -17,7 +19,7 @@ public class ProductDetailsResponse {
     private String title;
     private String subtitle;
     private String description;
-    private List<String> imageUrls;
+    private Set<String> imageUrls;
     private String privacy;
     private boolean showHome;
     private String status;

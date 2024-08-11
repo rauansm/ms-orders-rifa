@@ -2,6 +2,7 @@ package br.com.xmob.orders.productphoto.application.service;
 
 import br.com.xmob.orders.product.domain.Product;
 import br.com.xmob.orders.product.infra.ProductRepository;
+import br.com.xmob.orders.productphoto.application.api.PhotoResponse;
 import br.com.xmob.orders.productphoto.domain.NewPhoto;
 import br.com.xmob.orders.productphoto.domain.ProductPhoto;
 import br.com.xmob.orders.productphoto.infra.PhotoStorage;
@@ -25,7 +26,7 @@ public class ProductPhotoApplicationService implements ProductPhotoService {
 
     @Transactional
     @Override
-    public void addProductPhoto(UUID idProduct, MultipartFile photoRequest) {
+    public PhotoResponse addProductPhoto(UUID idProduct, MultipartFile photoRequest) {
         log.info("[start] ProductPhotoApplicationService - addProductPhoto");
         Product product = productRepository.searchProductById(idProduct);
         ProductPhoto photo = new ProductPhoto(product, photoRequest);
@@ -35,13 +36,24 @@ public class ProductPhotoApplicationService implements ProductPhotoService {
         photoRepository.saveProductPhoto(photo);
         productRepository.save(product);
         log.info("[finish] ProductPhotoApplicationService - addProductPhoto");
+        return new PhotoResponse(photo);
     }
+
+    @Override
+    public ProductPhoto searchProductPhotoById(UUID idProduct, UUID idPhoto) {
+        log.info("[start] ProductPhotoApplicationService - searchProductPhotoById");
+        Product product = productRepository.searchProductById(idProduct);
+        ProductPhoto photo = photoRepository.searchProductPhotoById(product.getId(), idPhoto);
+        log.info("[finish] ProductPhotoApplicationService - searchProductPhotoById");
+        return photo;
+    }
+
     @Transactional
     @Override
     public void deleteProductPhoto(UUID idProduct, UUID idPhoto) {
         log.info("[start] ProductPhotoApplicationService - deleteProductPhoto");
         Product product = productRepository.searchProductById(idProduct);
-        ProductPhoto photo = photoRepository.searchProductPhotoById(idPhoto);
+        ProductPhoto photo = photoRepository.searchProductPhotoById(product.getId(),idPhoto);
         photoStorage.remove(photo.getFilename());
         product.removeUrlPhoto(photo.getUrl());
         photoRepository.deletePhotoById(photo.getId());
