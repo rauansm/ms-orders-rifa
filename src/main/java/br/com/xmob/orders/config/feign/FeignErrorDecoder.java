@@ -1,4 +1,4 @@
-package br.com.xmob.orders.config;
+package br.com.xmob.orders.config.feign;
 
 import feign.Response;
 import feign.codec.ErrorDecoder;

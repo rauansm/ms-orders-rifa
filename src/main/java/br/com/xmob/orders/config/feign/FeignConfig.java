@@ -1,4 +1,4 @@
-package br.com.xmob.orders.config;
+package br.com.xmob.orders.config.feign;
 
 import feign.Client;
 import feign.Logger;
