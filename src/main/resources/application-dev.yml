@@ -38,5 +38,5 @@ storage:
     bucket: ifood-teste
     region: us-east-2
     directoryPhotos: catalago
-    idKeyAccess: AKIA6ODU3YWAF2P7D3ZH
-    keyAccessSecret: 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
+    idKeyAccess:
+    keyAccessSecret:
